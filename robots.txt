@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://babaprediction.netlify.app/sitemap.xml
