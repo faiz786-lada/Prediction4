@@ -563,6 +563,32 @@
                 </div>
             </div>
 
+            <!-- Server Engine Status (read-only) -->
+            <div class="mb-5 rounded-2xl border border-green-500/30 bg-black/40 p-4">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+                    <div>
+                        <p class="text-sm font-black text-green-400">🟢 PERMANENT SERVER ENGINE</p>
+                        <p class="text-[10px] text-gray-500 mt-0.5">Runs 24/7 on Firebase Cloud Functions — fully automatic</p>
+                    </div>
+                    <span id="serverEngineBadge" class="px-4 py-1.5 rounded-full text-xs font-black bg-green-500/20 text-green-400 border border-green-500/40">● LIVE</span>
+                </div>
+                <div id="masterEngineStatus" class="text-[11px] font-mono text-gray-500">Fetching server status...</div>
+                <div class="mt-2 grid grid-cols-3 gap-2 text-center text-[10px]">
+                    <div class="bg-black/30 rounded-lg p-2">
+                        <div class="text-gray-500">Last Period</div>
+                        <div id="masterPeriodDisp" class="text-purple-300 font-bold">--</div>
+                    </div>
+                    <div class="bg-black/30 rounded-lg p-2">
+                        <div class="text-gray-500">Prediction</div>
+                        <div id="masterPredDisp" class="font-black text-white">--</div>
+                    </div>
+                    <div class="bg-black/30 rounded-lg p-2">
+                        <div class="text-gray-500">Last Update</div>
+                        <div id="masterConfDisp" class="text-green-400 font-bold">--</div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Search -->
             <div class="mb-4">
                 <input type="text" id="adminSearch" class="input-glow text-sm" placeholder="🔍 Search by username, email, or phone..." oninput="filterAdminTable()">
@@ -792,7 +818,7 @@ async function restoreSession() {
 
 function showAuth()       { document.getElementById('authContainer').classList.remove('hidden'); document.getElementById('userDashboardPanel').classList.add('hidden'); document.getElementById('adminPanelContainer').classList.add('hidden'); }
 function showUserPanel()  { document.getElementById('authContainer').classList.add('hidden'); document.getElementById('adminPanelContainer').classList.add('hidden'); document.getElementById('userDashboardPanel').classList.remove('hidden'); document.getElementById('userDisplayName').textContent = `👤 ${currentSession.userData.username} | ${currentSession.userData.email}`; }
-function showAdminPanel() { document.getElementById('authContainer').classList.add('hidden'); document.getElementById('userDashboardPanel').classList.add('hidden'); document.getElementById('adminPanelContainer').classList.remove('hidden'); loadAdminUsers(); }
+function showAdminPanel() { document.getElementById('authContainer').classList.add('hidden'); document.getElementById('userDashboardPanel').classList.add('hidden'); document.getElementById('adminPanelContainer').classList.remove('hidden'); loadAdminUsers(); setTimeout(checkMasterEngineState, 500); }
 
 window.logoutFromApp = function() { if(aiInterval) clearInterval(aiInterval); aiInterval = null; if(trendChart) { trendChart.destroy(); trendChart = null; } localStorage.removeItem('hack_session'); location.reload(); };
 window.adminLogout   = function() { localStorage.removeItem('hack_session'); location.reload(); };
@@ -1093,11 +1119,145 @@ async function hybridPrediction(results, bigRatio, smallRatio, volatility, strea
 }
 
 // ═══════════════════════════════════════════════════════════
-// MAIN AI ENGINE LOOP
+// MASTER ENGINE — Writes prediction to Firebase (Admin only)
+// All users READ from Firebase — no local engine needed
+// ═══════════════════════════════════════════════════════════
+let masterEngineInterval = null;
+let masterEngineActive   = false;
+
+window.toggleMasterEngine = async function() {
+    if (masterEngineActive) {
+        // Stop
+        clearInterval(masterEngineInterval);
+        masterEngineInterval = null;
+        masterEngineActive = false;
+        await db.ref('globalEngine/active').set(false);
+        document.getElementById('masterEngineBtn').className = 'px-5 py-2 rounded-full text-sm font-black transition-all bg-gray-700 text-gray-400 border border-gray-600';
+        document.getElementById('masterEngineBtn').textContent = '⚫ START ENGINE';
+        document.getElementById('masterEngineStatus').textContent = 'Engine stopped.';
+    } else {
+        // Start
+        masterEngineActive = true;
+        await db.ref('globalEngine/active').set(true);
+        document.getElementById('masterEngineBtn').className = 'px-5 py-2 rounded-full text-sm font-black transition-all bg-green-500 text-white border border-green-400 animate-pulse';
+        document.getElementById('masterEngineBtn').textContent = '🟢 ENGINE LIVE';
+        document.getElementById('masterEngineStatus').textContent = '✅ Running — writing predictions to Firebase every 8s';
+        await runMasterEngine();
+        masterEngineInterval = setInterval(runMasterEngine, 8000);
+    }
+};
+
+async function runMasterEngine() {
+    try {
+        const data = await fetchLotteryData();
+        if (!data?.data?.list?.length) {
+            document.getElementById('masterEngineStatus').textContent = '⚠️ API unavailable — retrying...';
+            return;
+        }
+        const list     = data.data.list;
+        const results  = list.map(item => parseInt(item.number) >= 5 ? 'BIG' : 'SMALL');
+        const period   = list[0].issueNumber;
+
+        const last20          = results.slice(0, 20);
+        const bigRatio        = last20.filter(r=>r==='BIG').length / last20.length * 100;
+        const smallRatio      = 100 - bigRatio;
+        const volatility      = calculateVolatility(results);
+        const alternationRate = calculateAlternationRate(results);
+        const currentStreakVal = calculateStreakValue(results);
+        const sentiment       = 50 + (bigRatio - 50) * 0.5;
+
+        const rsiResult = calculateRSI(results);
+        const maResult  = calculateMovingAverages(results);
+        const fibResult = calculateFibonacciLevels(results);
+        const hybrid    = await hybridPrediction(results, bigRatio, smallRatio, volatility, currentStreakVal, alternationRate, sentiment);
+
+        const payload = {
+            period,
+            prediction:   hybrid.prediction,
+            confidence:   Math.round(hybrid.confidence),
+            bigScore:     hybrid.bigScore,
+            smallScore:   hybrid.smallScore,
+            ind:          hybrid.individualPredictions,
+            rsiValue:     rsiResult.value,
+            rsiSignal:    rsiResult.signal,
+            maSignal:     maResult.prediction || 'Neutral',
+            fibLevel:     fibResult.level,
+            bigRatio,
+            smallRatio,
+            volatility,
+            alternationRate,
+            streak:       currentStreakVal,
+            sentiment,
+            results:      results.slice(0, 50),
+            updatedAt:    Date.now()
+        };
+
+        await db.ref('globalPrediction').set(payload);
+
+        // Update admin panel display
+        const safeSet = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+        safeSet('masterPeriodDisp', period.slice(-8));
+        safeSet('masterPredDisp',   hybrid.prediction);
+        safeSet('masterConfDisp',   Math.round(hybrid.confidence) + '%');
+        const col = hybrid.prediction === 'BIG' ? 'text-blue-400' : 'text-orange-400';
+        const pd  = document.getElementById('masterPredDisp');
+        if (pd) pd.className = `font-black ${col}`;
+        document.getElementById('masterEngineStatus').textContent =
+            `✅ Last updated: ${new Date().toLocaleTimeString()} | Period: ${period.slice(-8)} | → ${hybrid.prediction} (${Math.round(hybrid.confidence)}%)`;
+
+    } catch(e) {
+        console.error('Master engine error:', e);
+        if (document.getElementById('masterEngineStatus'))
+            document.getElementById('masterEngineStatus').textContent = '⚠️ Error: ' + e.message;
+    }
+}
+
+// ─── Check if engine was already active (admin rejoining) ───
+// Admin panel: watch Firebase server engine status (read-only)
+async function checkMasterEngineState() {
+    if (currentSession.role !== 'admin') return;
+
+    db.ref('globalEngine').on('value', (snap) => {
+        const d = snap.val() || {};
+        const safeSet = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+
+        const isLive = d.active === true;
+        const badge  = document.getElementById('serverEngineBadge');
+        if (badge) {
+            badge.textContent = isLive ? '● LIVE' : '● OFFLINE';
+            badge.className   = isLive
+                ? 'px-4 py-1.5 rounded-full text-xs font-black bg-green-500/20 text-green-400 border border-green-500/40'
+                : 'px-4 py-1.5 rounded-full text-xs font-black bg-red-500/20 text-red-400 border border-red-500/40';
+        }
+
+        if (d.lastHeartbeat) {
+            const ago = Math.round((Date.now() - d.lastHeartbeat) / 1000);
+            safeSet('masterEngineStatus', `✅ Server running — last heartbeat: ${ago}s ago${d.lastError ? ' | ⚠️ ' + d.lastError : ''}`);
+            safeSet('masterConfDisp', ago + 's ago');
+        } else {
+            safeSet('masterEngineStatus', '⏳ Waiting for first server cycle...');
+        }
+        if (d.lastPeriod) safeSet('masterPeriodDisp', (d.lastPeriod||'').slice(-8));
+    });
+
+    // Also show last prediction
+    db.ref('globalPrediction').on('value', (snap) => {
+        const d = snap.val() || {};
+        const safeSet = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+        if (d.prediction) {
+            safeSet('masterPredDisp', d.prediction);
+            const pd = document.getElementById('masterPredDisp');
+            if (pd) pd.className = `font-black ${d.prediction === 'BIG' ? 'text-blue-400' : 'text-orange-400'}`;
+        }
+    });
+}
+
+// ═══════════════════════════════════════════════════════════
+// MAIN AI ENGINE LOOP — For LOCAL fallback only
+// Primary: users read from Firebase globalPrediction
 // ═══════════════════════════════════════════════════════════
 async function fetchAndAnalyzeAI() {
-    // ✅ Engine runs 24/7 — NO login check here
-    // UI updates only happen if dashboard elements exist (user logged in)
+    // Users now read from Firebase — this runs only as local fallback
     const userLoggedIn = currentSession.role === 'user';
 
     const statusEl = document.getElementById('fetchStatus');
@@ -1340,57 +1500,200 @@ function renderHistoryTable() {
 // ═══════════════════════════════════════════════════════════
 // START AI ENGINE — Runs 24/7, login-independent
 // ═══════════════════════════════════════════════════════════
-let aiEngineStarted = false;
+// ═══════════════════════════════════════════════════════════
+// FIREBASE LISTENER — Users read global prediction from Firebase
+// No local engine — all users get same result from master engine
+// ═══════════════════════════════════════════════════════════
+let firebaseListenerOn = false;
 
+function startFirebaseListener() {
+    if (firebaseListenerOn) return;
+    firebaseListenerOn = true;
+
+    // Show live server engine status to users
+    db.ref('globalEngine').on('value', (snap) => {
+        const el = document.getElementById('fetchStatus');
+        if (!el) return;
+        const d = snap.val() || {};
+        if (d.active && d.lastHeartbeat) {
+            const ago = Math.round((Date.now() - d.lastHeartbeat) / 1000);
+            el.textContent = ago < 120 ? '' : `⚠️ Last update ${ago}s ago`;
+            el.style.color = '';
+        } else {
+            el.textContent = '⏳ Server engine starting...';
+            el.style.color = '#fbbf24';
+        }
+    });
+
+    db.ref('globalPrediction').on('value', async (snap) => {
+        const d = snap.val();
+        if (!d || currentSession.role !== 'user') return;
+
+        const safeSet = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+        const safeSetStyle = (id, prop, v) => { const el = document.getElementById(id); if (el) el.style[prop] = v; };
+
+        // ── Core prediction display ──
+        const predEl = document.getElementById('aiPredictionDisplay');
+        if (predEl) {
+            predEl.textContent  = d.prediction;
+            predEl.className    = `text-6xl md:text-7xl font-black tracking-wider text-center mb-4 transition-all duration-500 ${d.prediction === 'BIG' ? 'prediction-big' : 'prediction-small'}`;
+        }
+        safeSetStyle('confidenceFill', 'width', `${d.confidence}%`);
+        safeSet('confidenceText',   `Confidence: ${d.confidence}%`);
+        safeSet('ensembleVote',     `B:${(d.bigScore||0).toFixed(2)} S:${(d.smallScore||0).toFixed(2)}`);
+        safeSet('fetchStatus',      '');
+
+        // ── Indicators ──
+        safeSet('currentPeriod',   (d.period||'').slice(-8));
+        safeSet('bigRatio',        `${(d.bigRatio||0).toFixed(0)}%`);
+        safeSet('smallRatio',      `${(d.smallRatio||0).toFixed(0)}%`);
+        safeSet('volatilityValue', `${(d.volatility||0).toFixed(0)}%`);
+        safeSet('alternationRate', `${(d.alternationRate||0).toFixed(0)}%`);
+        safeSet('marketSentiment', `${(d.sentiment||0).toFixed(0)}%`);
+        safeSet('rsiValue',        (d.rsiValue||0).toFixed(1));
+        safeSet('rsiStatus',       d.rsiSignal||'--');
+        safeSet('maSignal',        d.maSignal||'Neutral');
+        safeSet('fibLevel',        `${(d.fibLevel||0).toFixed(0)}%`);
+        safeSet('streakDisplay',   d.streak||0);
+        safeSet('streakCount',     d.streak||0);
+
+        // ── AI Insight ──
+        const ind = d.ind || {};
+        safeSet('aiInsight', `🧠 NN:${ind.neural||'N/A'} | RSI:${ind.rsi||'N/A'} | MA:${ind.ma||'N/A'} | FIB:${ind.fib||'N/A'} | STRK:${ind.streak||'N/A'}`);
+
+        // ── Pattern / Momentum ──
+        const streak = d.streak || 0;
+        const altRate = d.alternationRate || 0;
+        const results = d.results || [];
+        let patternText = 'Normal', momentum = 50;
+        if (streak >= 5)       { patternText = `🔥 MEGA ${results[0]||''} Streak (${streak}x)`; momentum = 90; }
+        else if (streak >= 3)  { patternText = `📈 Strong ${results[0]||''} Streak`; momentum = 75; }
+        else if (altRate > 70) { patternText = `🔄 Alternating (${altRate.toFixed(0)}%)`; momentum = 65; }
+        safeSet('patternType',   patternText.slice(0, 28));
+        safeSet('momentum',      momentum >= 70 ? 'Strong ↑' : (momentum >= 50 ? 'Moderate →' : 'Weak ↓'));
+        safeSet('predictedNext', d.prediction);
+
+        // ── Signal / Risk ──
+        let signalText = '', riskLevel = 'Medium';
+        if (d.confidence >= 85)      { signalText = 'STRONG BUY'; riskLevel = 'Low'; }
+        else if (d.confidence >= 70) { signalText = 'BUY'; riskLevel = 'Medium'; }
+        else if (d.confidence >= 55) { signalText = 'CAUTIOUS'; riskLevel = 'High'; }
+        else                         { signalText = 'AVOID'; riskLevel = 'Very High'; }
+        safeSet('aiSignal',       `Signal: ${signalText}`);
+        safeSet('riskLevel',      `Risk: ${riskLevel}`);
+        safeSet('winProbability', `Win Prob: ${d.confidence}%`);
+
+        const kellyPct = Math.max(0, Math.min(25, ((d.confidence/100)*2-1)*100));
+        safeSet('kellyBet', `Kelly: ${kellyPct.toFixed(0)}%`);
+
+        let rec = '';
+        if (d.confidence >= 85)      rec = `🎯 Strong ${d.prediction} signal! NN+Ensemble consensus. Kelly: ${kellyPct.toFixed(0)}%`;
+        else if (d.confidence >= 70) rec = `⚡ AI suggests ${d.prediction}. Kelly: ${kellyPct.toFixed(0)}% of bankroll.`;
+        else if (d.confidence >= 55) rec = `⚠️ Mixed signals. Reduce stake. Wait for clearer pattern.`;
+        else                         rec = `🔴 High uncertainty. Models conflicting. Skip this round.`;
+        safeSet('aiRecommendation', rec);
+
+        // ── Betting ──
+        const betAmountCalc = 10 * Math.pow(3, userLevel - 1);
+        safeSet('betAmount',    `₹${betAmountCalc}`);
+        safeSet('levelDisplay', `L${userLevel}`);
+        safeSet('aiSuggestion', d.confidence >= 65 ? `Bet ${d.prediction}` : 'Wait/Skip');
+        safeSet('simBankroll',  `₹${simBankroll.toFixed(0)}`);
+
+        // ── Track result vs last prediction ──
+        const currentPeriod = d.period;
+        const currentResult = results[0];
+        if (lastPrediction && lastPeriodChecked && lastPeriodChecked !== currentPeriod && currentResult) {
+            const isWin  = lastPrediction === currentResult;
+            const profit = isWin ? betAmountCalc : -betAmountCalc;
+            simBankroll += profit;
+
+            const updatePerf = (model, key, actual) => {
+                if (!model) return;
+                if (model === actual) { modelPerformance[key].correct++; modelPerformance[key].total++; }
+                else modelPerformance[key].total++;
+                if (modelPerformance[key].total > 0) modelPerformance[key].accuracy = (modelPerformance[key].correct / modelPerformance[key].total) * 100;
+            };
+            updatePerf(ind.rsi, 'rsi', currentResult);
+            updatePerf(ind.ma,  'ma',  currentResult);
+            updatePerf(ind.fib, 'fibonacci', currentResult);
+            updatePerf(d.prediction, 'hybrid', currentResult);
+
+            safeSet('rsiAccuracy',    `${modelPerformance.rsi.accuracy.toFixed(1)}%`);
+            safeSet('maAccuracy',     `${modelPerformance.ma.accuracy.toFixed(1)}%`);
+            safeSet('fibAccuracy',    `${modelPerformance.fibonacci.accuracy.toFixed(1)}%`);
+            safeSet('hybridAccuracy', `${modelPerformance.hybrid.accuracy.toFixed(1)}%`);
+
+            if (isWin) {
+                currentStreak++;
+                if (currentStreak > bestStreak) bestStreak = currentStreak;
+                canvasConfetti({ particleCount: 120, spread: 60, origin: { y: 0.65 } });
+                userLevel = 1;
+            } else {
+                currentStreak = 0;
+                userLevel = Math.min(userLevel + 1, 8);
+            }
+
+            bettingHistory.unshift({ period: currentPeriod, prediction: lastPrediction, actualResult: currentResult, win: isWin, profit, level: userLevel, timestamp: Date.now() });
+            if (bettingHistory.length > 20) bettingHistory.pop();
+            saveBettingHistory();
+            renderHistoryTable();
+        }
+
+        lastPrediction    = d.prediction;
+        lastPeriodChecked = currentPeriod;
+
+        // ── Chart ──
+        if (results.length > 0) {
+            if (trendChart) { trendChart.destroy(); trendChart = null; }
+            const chartCanvas = document.getElementById('trendChart');
+            if (chartCanvas) {
+                const ctx       = chartCanvas.getContext('2d');
+                const labels    = results.slice(0,50).reverse().map((_,i) => `${i+1}`);
+                const chartData = results.slice(0,50).reverse().map(r => r==='BIG' ? 1 : 0);
+                trendChart = new Chart(ctx, {
+                    type: 'line',
+                    data: { labels, datasets: [{ label: 'BIG=1 / SMALL=0', data: chartData, borderColor: '#A66CFF', backgroundColor: 'rgba(166,108,255,0.12)', tension: 0.25, fill: true, pointRadius: 2.5, pointBackgroundColor: chartData.map(v => v===1 ? '#60a5fa' : '#fb923c'), pointBorderColor: 'transparent', borderWidth: 2 }] },
+                    options: { responsive: true, maintainAspectRatio: true, animation: { duration: 400 }, plugins: { legend: { labels: { color: '#c4b5fd', font: { size: 10 } } } }, scales: { y: { min: -0.2, max: 1.2, ticks: { stepSize: 1, callback: v => v===1?'BIG':v===0?'SMALL':'', color: '#9ca3af', font: { size: 9 } }, grid: { color: 'rgba(139,92,246,0.15)' } }, x: { ticks: { color: '#6b7280', maxRotation: 0, font: { size: 8 } }, grid: { color: 'rgba(139,92,246,0.1)' } } } }
+                });
+            }
+        }
+
+        // ── NN Training status from Firebase ──
+        safeSet('modelStatusText', '✅ Master Engine Active — Predictions via Firebase');
+        safeSet('trainingSamples', results.length);
+        const elapsed = d.updatedAt ? Math.round((Date.now() - d.updatedAt)/1000) : '--';
+        safeSet('epochCount', elapsed + 's ago');
+
+    }); // end db.ref listener
+}
+
+// ═══════════════════════════════════════════════════════════
+// startAIEngine — called on user login
+// Now just starts Firebase listener (no local engine)
+// ═══════════════════════════════════════════════════════════
 async function startAIEngine() {
-    // If engine already running, just reload history for the newly logged-in user
-    if (aiEngineStarted) {
-        loadSavedHistory();
-        renderHistoryTable();
-        return;
-    }
-    aiEngineStarted = true;
-    if (aiInterval) { clearInterval(aiInterval); aiInterval = null; }
     userLevel = 1;
     loadSavedHistory();
     renderHistoryTable();
-    neuralNetwork = await createNeuralNetwork();
-    await fetchAndAnalyzeAI();
-    aiInterval = setInterval(fetchAndAnalyzeAI, 8000);
+    // Build NN locally only for admin master engine use
+    if (!neuralNetwork) neuralNetwork = await createNeuralNetwork();
+    // Start listening to Firebase for predictions
+    startFirebaseListener();
 }
-
-// ═══════════════════════════════════════════════════════════
-// BACKGROUND AI ENGINE — Starts immediately on page load
-// Keeps running whether user is logged in or not
-// ═══════════════════════════════════════════════════════════
-async function startBackgroundAIEngine() {
-    if (aiEngineStarted) return;
-    aiEngineStarted = true;
-    if (aiInterval) { clearInterval(aiInterval); aiInterval = null; }
-    neuralNetwork = await createNeuralNetwork();
-    await fetchAndAnalyzeAI();
-    aiInterval = setInterval(fetchAndAnalyzeAI, 8000);
-}
-
-// Keep AI engine alive — restart if it ever stops unexpectedly
-setInterval(async () => {
-    if (!aiInterval && aiEngineStarted) {
-        console.log('AI Engine watchdog: restarting...');
-        aiInterval = setInterval(fetchAndAnalyzeAI, 8000);
-        await fetchAndAnalyzeAI();
-    }
-}, 15000);
 
 // ═══════════════════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════════════════
 (async function init() {
-    // Start AI engine immediately — no login required
-    startBackgroundAIEngine();
-
-    // Then check if user session exists
+    // Check if user session exists
     const restored = await restoreSession();
     if (!restored) showAuth();
+
+    // If admin, check if master engine was previously active
+    if (currentSession.role === 'admin') {
+        checkMasterEngineState();
+    }
 })();
 </script>
 </body>

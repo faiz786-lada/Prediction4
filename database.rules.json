@@ -1,0 +1,20 @@
+{
+  "rules": {
+    "globalPrediction": {
+      ".read": true,
+      ".write": false
+    },
+    "globalEngine": {
+      ".read": true,
+      ".write": false
+    },
+    "users": {
+      ".read": false,
+      ".write": false,
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    }
+  }
+}
