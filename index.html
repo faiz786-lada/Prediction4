@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>NUMBER HACK | HYBRID AI NEURAL ENGINE v8.0</title>
+
+    <!-- Google Site Verification -->
+    <meta name="google-site-verification" content="zykTbQkdf5dPPgpVTfiYRXbbOxgNHy7e6_BS-RwxM08" />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="NUMBER HACK – Hybrid AI Neural Engine v8.0 powered by TensorFlow.js. Real-time BIG/SMALL predictions using RSI, Moving Averages, Fibonacci & Neural Network ensemble.">
+    <meta name="keywords" content="number hack, AI prediction, neural network, big small prediction, wingo prediction, hybrid AI engine">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d0a1a">
+
+    <!-- AI Neural Brain Favicon (SVG) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='bg' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23a855f7'/%3E%3Cstop offset='100%25' stop-color='%234c1d95'/%3E%3C/radialGradient%3E%3Cfilter id='glow'%3E%3CfeGaussianBlur stdDeviation='1.5' result='blur'/%3E%3CfeMerge%3E%3CfeMergeNode in='blur'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23bg)'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23c084fc' stroke-width='1.5' opacity='0.6'/%3E%3Cg filter='url(%23glow)' stroke='%23e9d5ff' stroke-width='1.2' fill='none' opacity='0.9'%3E%3Ccircle cx='32' cy='18' r='3' fill='%23f0abfc'/%3E%3Ccircle cx='20' cy='27' r='3' fill='%23f0abfc'/%3E%3Ccircle cx='44' cy='27' r='3' fill='%23f0abfc'/%3E%3Ccircle cx='24' cy='40' r='3' fill='%23f0abfc'/%3E%3Ccircle cx='40' cy='40' r='3' fill='%23f0abfc'/%3E%3Ccircle cx='32' cy='47' r='3' fill='%23a78bfa'/%3E%3Cline x1='32' y1='18' x2='20' y2='27'/%3E%3Cline x1='32' y1='18' x2='44' y2='27'/%3E%3Cline x1='20' y1='27' x2='24' y2='40'/%3E%3Cline x1='20' y1='27' x2='40' y2='40'/%3E%3Cline x1='44' y1='27' x2='24' y2='40'/%3E%3Cline x1='44' y1='27' x2='40' y2='40'/%3E%3Cline x1='24' y1='40' x2='32' y2='47'/%3E%3Cline x1='40' y1='40' x2='32' y2='47'/%3E%3Cline x1='20' y1='27' x2='44' y2='27' opacity='0.4'/%3E%3Cline x1='24' y1='40' x2='40' y2='40' opacity='0.4'/%3E%3C/g%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='bg' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23a855f7'/%3E%3Cstop offset='100%25' stop-color='%234c1d95'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23bg)'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23c084fc' stroke-width='1.5' opacity='0.6'/%3E%3Cg stroke='%23e9d5ff' stroke-width='1.2' fill='none'%3E%3Ccircle cx='32' cy='18' r='3' fill='%23f0abfc'/%3E%3Ccircle cx='20' cy='27' r='3' fill='%23f0abfc'/%3E%3Ccircle cx='44' cy='27' r='3' fill='%23f0abfc'/%3E%3Ccircle cx='24' cy='40' r='3' fill='%23f0abfc'/%3E%3Ccircle cx='40' cy='40' r='3' fill='%23f0abfc'/%3E%3Ccircle cx='32' cy='47' r='3' fill='%23a78bfa'/%3E%3Cline x1='32' y1='18' x2='20' y2='27'/%3E%3Cline x1='32' y1='18' x2='44' y2='27'/%3E%3Cline x1='20' y1='27' x2='24' y2='40'/%3E%3Cline x1='20' y1='27' x2='40' y2='40'/%3E%3Cline x1='44' y1='27' x2='24' y2='40'/%3E%3Cline x1='44' y1='27' x2='40' y2='40'/%3E%3Cline x1='24' y1='40' x2='32' y2='47'/%3E%3Cline x1='40' y1='40' x2='32' y2='47'/%3E%3C/g%3E%3C/svg%3E">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,700;14..32,900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.15.0/dist/tf.min.js"></script>
+    <style>
+        * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
+        body {
+            background: radial-gradient(ellipse at 20% 30%, #0d0a1a 0%, #000000 70%);
+            min-height: 100vh;
+            padding: 16px;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(10, 8, 20, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(166, 108, 255, 0.5);
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 25px rgba(166,108,255,0.25);
+            transition: box-shadow 0.3s ease;
+        }
+        .glass-panel:hover { box-shadow: 0 25px 50px rgba(0,0,0,0.7), 0 0 35px rgba(166,108,255,0.4); }
+        .btn-primary {
+            background: linear-gradient(95deg, #8b5cf6, #A66CFF, #c084fc);
+            box-shadow: 0 0 18px rgba(166,108,255,0.6);
+            transition: all 0.2s;
+            color: white;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+        }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 0 28px rgba(166,108,255,0.8); }
+        .btn-primary:active { transform: translateY(0); }
+        .input-glow {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(166,108,255,0.6);
+            border-radius: 0.875rem;
+            padding: 12px 16px;
+            color: white;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .input-glow::placeholder { color: rgba(160,160,200,0.5); }
+        .input-glow:focus { border-color: #c084fc; box-shadow: 0 0 12px rgba(192,132,252,0.4); }
+        .password-wrapper { position: relative; width: 100%; }
+        .toggle-password {
+            position: absolute; right: 13px; top: 50%; transform: translateY(-50%);
+            cursor: pointer; color: #A66CFF; font-size: 14px;
+            background: transparent; border: none; padding: 4px;
+        }
+        .btn-sm {
+            padding: 5px 12px; border-radius: 20px; font-size: 11px;
+            font-weight: 700; cursor: pointer; margin: 2px; border: none;
+            transition: opacity 0.15s, transform 0.15s;
+        }
+        .btn-sm:hover { opacity: 0.85; transform: scale(1.03); }
+        .btn-approve { background: #10b981; color: white; }
+        .btn-reject { background: #f59e0b; color: white; }
+        .btn-delete { background: #ef4444; color: white; }
+        .btn-block { background: #8b5cf6; color: white; }
+        .admin-dark-panel {
+            background: rgba(20, 15, 35, 0.96);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(139, 92, 246, 0.45);
+            border-radius: 1.5rem;
+        }
+        .admin-table th { color: #c4b5fd; font-weight: 700; font-size: 12px; padding: 10px 12px; text-align: left; }
+        .admin-table td { color: #e2e8f0; border-bottom: 1px solid rgba(139, 92, 246, 0.2); padding: 10px 12px; font-size: 12px; }
+        .admin-table tr:hover td { background: rgba(139,92,246,0.07); }
+        .ai-brain {
+            background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(192,132,252,0.08));
+            border: 1px solid rgba(166,108,255,0.5);
+            animation: neuralPulse 2.5s ease-in-out infinite;
+        }
+        @keyframes neuralPulse {
+            0%, 100% { box-shadow: 0 0 8px rgba(166,108,255,0.3), inset 0 0 8px rgba(166,108,255,0.1); }
+            50% { box-shadow: 0 0 30px rgba(166,108,255,0.6), inset 0 0 20px rgba(166,108,255,0.2); }
+        }
+        .confidence-bar { transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        .history-row-win { background: rgba(16, 185, 129, 0.12); border-left: 3px solid #10b981; }
+        .history-row-loss { background: rgba(239, 68, 68, 0.07); border-left: 3px solid #ef4444; }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: #0a0814; }
+        ::-webkit-scrollbar-thumb { background: #8b5cf6; border-radius: 10px; }
+        .ai-status-bar {
+            background: linear-gradient(90deg, transparent, rgba(166,108,255,0.5), transparent);
+            animation: scanLine 2s linear infinite;
+            background-size: 200% 100%;
+        }
+        @keyframes scanLine {
+            0% { background-position: -100% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .prediction-big { text-shadow: 0 0 30px rgba(59,130,246,0.8), 0 0 60px rgba(59,130,246,0.4); color: #60a5fa; }
+        .prediction-small { text-shadow: 0 0 30px rgba(249,115,22,0.8), 0 0 60px rgba(249,115,22,0.4); color: #fb923c; }
+        .stat-card { transition: all 0.25s ease; }
+        .stat-card:hover { transform: scale(1.04); background: rgba(139,92,246,0.15) !important; }
+        .training-status {
+            background: linear-gradient(90deg, #10b981, #3b82f6, #8b5cf6);
+            background-size: 200% 100%;
+            animation: trainingPulse 1.5s ease-in-out infinite;
+        }
+        @keyframes trainingPulse {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
+        }
+        .neuron-dot {
+            width: 7px; height: 7px;
+            background: #A66CFF; border-radius: 50%;
+            animation: neuronPulse 0.9s ease-in-out infinite;
+        }
+        @keyframes neuronPulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.6); }
+        }
+        .toast {
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: rgba(20,15,35,0.97); border: 1px solid rgba(166,108,255,0.6);
+            color: white; padding: 12px 24px; border-radius: 50px; font-size: 13px;
+            font-weight: 600; z-index: 9999; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 20px rgba(166,108,255,0.3);
+            white-space: nowrap;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .loader-ring {
+            width: 20px; height: 20px; border: 2px solid rgba(166,108,255,0.3);
+            border-top-color: #A66CFF; border-radius: 50%;
+            animation: spin 0.8s linear infinite; display: inline-block;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .badge-live { 
+            background: rgba(16,185,129,0.2); border: 1px solid rgba(16,185,129,0.5);
+            color: #34d399; font-size: 10px; font-weight: 700; padding: 2px 8px;
+            border-radius: 20px; letter-spacing: 0.1em;
+        }
+        .api-error { color: #f87171; font-size: 11px; }
+        .tab-active { border-bottom: 2px solid #A66CFF; color: #c4b5fd; }
+        .tab-inactive { color: #6b7280; }
+        @media (max-width: 640px) {
+            .admin-table thead { display: none; }
+            .admin-table, .admin-table tbody, .admin-table tr, .admin-table td { display: block; width: 100%; }
+            .admin-table tr { border: 1px solid rgba(139,92,246,0.3); border-radius: 0.75rem; margin-bottom: 8px; padding: 8px; }
+            .admin-table td { border-bottom: none; padding: 4px 8px; }
+            .admin-table td::before { content: attr(data-label); font-weight: 700; color: #c4b5fd; margin-right: 8px; font-size: 10px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Toast Notification -->
+<div id="toastEl" class="toast"></div>
+
+<div class="container mx-auto max-w-7xl">
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- AUTH SECTION -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div id="authContainer" class="flex justify-center items-center min-h-screen py-8">
+        <div class="glass-panel w-full max-w-sm p-8 text-center">
+            <!-- Logo -->
+            <div class="mb-2">
+                <div class="inline-flex items-center justify-center gap-2 mb-3">
+                    <div class="flex gap-1">
+                        <div class="neuron-dot" style="animation-delay:0s"></div>
+                        <div class="neuron-dot" style="animation-delay:0.25s"></div>
+                        <div class="neuron-dot" style="animation-delay:0.5s"></div>
+                    </div>
+                </div>
+                <h1 class="text-4xl font-black bg-gradient-to-r from-white via-purple-400 to-pink-400 bg-clip-text text-transparent tracking-tight">NUMBER HACK</h1>
+                <p class="text-[10px] text-purple-400 tracking-[0.25em] mt-1.5">🧠 HYBRID AI NEURAL ENGINE v8.0</p>
+                <p class="text-[9px] text-gray-600 tracking-[0.15em]">TENSORFLOW.JS + ENSEMBLE SYSTEM</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex gap-0 my-6 border-b border-purple-500/30">
+                <button id="tabLoginBtn" class="flex-1 py-2.5 font-bold text-sm tab-active transition-all" onclick="switchTab('login')">LOGIN</button>
+                <button id="tabSignupBtn" class="flex-1 py-2.5 font-bold text-sm tab-inactive transition-all" onclick="switchTab('signup')">SIGNUP</button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginFormDiv" class="space-y-3.5">
+                <input type="text" id="loginIdentifier" class="input-glow" placeholder="Username / Email / Phone" autocomplete="username">
+                <div class="password-wrapper">
+                    <input type="password" id="loginPasswordInput" class="input-glow" placeholder="Password" autocomplete="current-password">
+                    <button class="toggle-password" onclick="togglePassword('loginPasswordInput', this)" type="button">👁️</button>
+                </div>
+                <button onclick="handleUserLogin()" class="btn-primary w-full py-3 rounded-xl text-sm flex items-center justify-center gap-2" id="loginBtn">
+                    🚀 LAUNCH AI ENGINE
+                </button>
+            </div>
+
+            <!-- Signup Form -->
+            <div id="signupFormDiv" class="space-y-3.5 hidden">
+                <input type="text" id="signupUsername" class="input-glow" placeholder="Full Name / Username" autocomplete="name">
+                <input type="email" id="signupEmailField" class="input-glow" placeholder="Email Address" autocomplete="email">
+                <input type="tel" id="signupPhone" class="input-glow" placeholder="Phone (optional)" autocomplete="tel">
+                <div class="password-wrapper">
+                    <input type="password" id="signupPass" class="input-glow" placeholder="Password (min 6 chars)" autocomplete="new-password">
+                    <button class="toggle-password" onclick="togglePassword('signupPass', this)" type="button">👁️</button>
+                </div>
+                <button onclick="handleUserSignup()" class="btn-primary w-full py-3 rounded-xl text-sm" id="signupBtn">
+                    REGISTER & REQUEST APPROVAL
+                </button>
+                <p class="text-[11px] text-yellow-400/80">⏳ Admin approval required after signup</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- USER DASHBOARD -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div id="userDashboardPanel" class="hidden w-full max-w-7xl mx-auto space-y-4 pb-8">
+
+        <!-- Header Bar -->
+        <div class="glass-panel p-4 relative overflow-hidden">
+            <div class="ai-status-bar absolute top-0 left-0 w-full h-0.5"></div>
+            <div class="flex flex-wrap justify-between items-center gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="flex gap-1">
+                        <div class="neuron-dot" style="animation-delay:0s"></div>
+                        <div class="neuron-dot" style="animation-delay:0.25s"></div>
+                        <div class="neuron-dot" style="animation-delay:0.5s"></div>
+                    </div>
+                    <div>
+                        <h2 class="text-base font-black text-purple-300 leading-tight">🧠 HYBRID AI v8.0</h2>
+                        <p class="text-[10px] text-gray-500 font-mono" id="userDisplayName">Welcome</p>
+                    </div>
+                    <span class="badge-live">● LIVE</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div id="fetchStatus" class="text-[10px] text-gray-500 font-mono"></div>
+                    <button onclick="logoutFromApp()" class="text-xs bg-red-500/20 hover:bg-red-500/40 px-4 py-1.5 rounded-full border border-red-400/50 text-red-300 transition-all font-semibold">LOGOUT</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Training Status -->
+        <div class="glass-panel p-4">
+            <div id="trainingStatus" class="rounded-xl p-3 bg-black/50 border border-purple-500/20">
+                <div class="flex items-center justify-between flex-wrap gap-2">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <span class="text-xs text-green-400 font-mono font-semibold">🤖 HYBRID AI STATUS</span>
+                    </div>
+                    <span id="modelStatusText" class="text-xs text-purple-300">Initializing Neural Network + Ensemble...</span>
+                </div>
+                <div class="mt-2 h-1.5 bg-gray-800 rounded-full overflow-hidden">
+                    <div id="trainingProgress" class="training-status h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <div class="mt-2 text-[9px] text-gray-500 flex flex-wrap justify-between gap-2">
+                    <span>📊 Samples: <span id="trainingSamples" class="text-purple-300">0</span></span>
+                    <span>🎯 NN Accuracy: <span id="modelAccuracy" class="text-purple-300">0%</span></span>
+                    <span>🧬 Epochs: <span id="epochCount" class="text-purple-300">0</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main AI Prediction Card -->
+        <div class="glass-panel p-5 relative overflow-hidden">
+            <div class="ai-status-bar absolute top-0 left-0 w-full h-0.5"></div>
+            
+            <!-- AI Brain Core -->
+            <div class="ai-brain rounded-2xl p-5 mb-5">
+                <p class="text-[9px] text-purple-300 text-center mb-3 tracking-widest font-semibold">🧬 TENSORFLOW.JS NEURAL NETWORK + ENSEMBLE VOTING (RSI + MA + FIBONACCI + STREAK)</p>
+                <div id="aiPredictionDisplay" class="text-6xl md:text-7xl font-black tracking-wider text-center mb-4 transition-all duration-500">
+                    ANALYZING
+                </div>
+                <!-- Confidence Bar -->
+                <div class="w-full bg-gray-800/80 rounded-full h-3 mb-3 overflow-hidden">
+                    <div id="confidenceFill" class="confidence-bar h-full rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500" style="width: 0%"></div>
+                </div>
+                <div class="flex flex-wrap justify-between text-xs gap-2">
+                    <span id="confidenceText" class="text-gray-400">Confidence: 0%</span>
+                    <span id="aiAccuracy" class="text-green-400">📊 Hybrid: Training...</span>
+                    <span id="aiModel" class="text-purple-300">🧠 NN + Ensemble v8.0</span>
+                </div>
+                <div id="aiInsight" class="text-xs text-gray-300 bg-black/40 rounded-xl p-3 mt-3 font-mono leading-relaxed">
+                    🤖 Hybrid AI initializing: Neural Network + Statistical Ensemble...
+                </div>
+            </div>
+
+            <!-- Technical Indicators -->
+            <div class="grid grid-cols-3 md:grid-cols-5 gap-2 mb-5">
+                <div class="stat-card bg-black/40 rounded-xl p-2.5 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">RSI (14)</p>
+                    <p id="rsiValue" class="text-base font-bold text-white">--</p>
+                    <p id="rsiStatus" class="text-[8px] text-purple-300">--</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-2.5 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">MA 5/10/20</p>
+                    <p id="maSignal" class="text-xs font-bold text-white">--</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-2.5 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">VOLATILITY</p>
+                    <p id="volatilityValue" class="text-base font-bold text-purple-400">0%</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-2.5 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">FIBONACCI</p>
+                    <p id="fibLevel" class="text-xs font-bold text-yellow-400">--</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-2.5 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">ENSEMBLE</p>
+                    <p id="ensembleVote" class="text-[9px] font-bold text-green-400">--</p>
+                </div>
+            </div>
+
+            <!-- Real-time Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-5">
+                <div class="stat-card bg-black/40 rounded-xl p-3 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">CURRENT PERIOD</p>
+                    <p id="currentPeriod" class="text-sm font-mono font-bold text-white">---</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-3 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">BIG RATIO (20)</p>
+                    <p id="bigRatio" class="text-lg font-bold text-blue-400">0%</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-3 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">SMALL RATIO (20)</p>
+                    <p id="smallRatio" class="text-lg font-bold text-orange-400">0%</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-3 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">MARKET SENTIMENT</p>
+                    <p id="marketSentiment" class="text-lg font-bold text-purple-400">0%</p>
+                </div>
+            </div>
+
+            <!-- AI Recommendation -->
+            <div class="bg-gradient-to-r from-violet-900/40 to-fuchsia-900/30 rounded-xl p-4 mb-5 border border-purple-500/30">
+                <div class="flex items-center gap-2 mb-2">
+                    <span>🎯</span>
+                    <span class="text-xs text-purple-300 font-bold tracking-wide">HYBRID AI RECOMMENDATION</span>
+                </div>
+                <p id="aiRecommendation" class="text-sm font-bold text-white mb-3">Calculating optimal strategy...</p>
+                <div class="flex flex-wrap gap-2">
+                    <span id="riskLevel" class="text-[10px] bg-yellow-500/20 border border-yellow-500/30 px-2.5 py-1 rounded-full text-yellow-300">Risk: Medium</span>
+                    <span id="winProbability" class="text-[10px] bg-green-500/20 border border-green-500/30 px-2.5 py-1 rounded-full text-green-300">Win Prob: --</span>
+                    <span id="aiSignal" class="text-[10px] bg-blue-500/20 border border-blue-500/30 px-2.5 py-1 rounded-full text-blue-300">Signal: --</span>
+                    <span id="kellyBet" class="text-[10px] bg-purple-500/20 border border-purple-500/30 px-2.5 py-1 rounded-full text-purple-300">Kelly: --</span>
+                </div>
+            </div>
+
+            <!-- Level & Betting Info -->
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+                <div class="stat-card bg-black/40 rounded-xl p-3 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">LEVEL</p>
+                    <p id="levelDisplay" class="text-base font-bold text-purple-300">L1</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-3 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">NEXT BET</p>
+                    <p id="betAmount" class="text-base font-bold text-green-400">₹10</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-3 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">AI SUGGEST</p>
+                    <p id="aiSuggestion" class="text-xs font-bold text-yellow-400">Hold</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-3 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">STREAK</p>
+                    <p id="streakDisplay" class="text-base font-bold text-white">0</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-3 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">SIM BANKROLL</p>
+                    <p id="simBankroll" class="text-base font-bold text-emerald-400">₹10000</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart Section -->
+        <div class="glass-panel p-4">
+            <h3 class="text-xs font-bold text-purple-300 mb-3 flex items-center gap-2">
+                📈 HYBRID AI TREND ANALYSIS
+                <span class="text-[9px] text-gray-500">(Last 50 Results)</span>
+            </h3>
+            <canvas id="trendChart" style="max-height: 160px;"></canvas>
+        </div>
+
+        <!-- Pattern Detection -->
+        <div class="glass-panel p-4">
+            <h3 class="text-xs font-bold text-purple-300 mb-3">🔍 HYBRID PATTERN DETECTION</h3>
+            <div class="grid grid-cols-3 md:grid-cols-6 gap-2 text-xs">
+                <div class="stat-card bg-black/40 rounded-xl p-2.5 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">STREAK</p>
+                    <p id="streakCount" class="text-xl font-bold text-white">0</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-2.5 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">PATTERN</p>
+                    <p id="patternType" class="text-xs font-bold text-purple-300">None</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-2.5 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">MOMENTUM</p>
+                    <p id="momentum" class="text-xs font-bold text-yellow-400">Neutral</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-2.5 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">HYBRID PRED</p>
+                    <p id="predictedNext" class="text-xs font-bold text-green-400">--</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-2.5 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">ALTERNATION</p>
+                    <p id="alternationRate" class="text-xs font-bold text-blue-400">0%</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-2.5 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">NN ACTIVATION</p>
+                    <p id="nnActivation" class="text-xs font-bold text-orange-400">--</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model Performance -->
+        <div class="glass-panel p-4">
+            <h3 class="text-xs font-bold text-purple-300 mb-3">📊 MODEL PERFORMANCE TRACKER</h3>
+            <div class="grid grid-cols-3 md:grid-cols-5 gap-2 text-xs">
+                <div class="stat-card bg-black/40 rounded-xl p-2.5 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">RSI Model</p>
+                    <p id="rsiAccuracy" class="text-sm font-bold text-white">--%</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-2.5 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">MA Model</p>
+                    <p id="maAccuracy" class="text-sm font-bold text-white">--%</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-2.5 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">Fibonacci</p>
+                    <p id="fibAccuracy" class="text-sm font-bold text-white">--%</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-2.5 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">Neural Net</p>
+                    <p id="nnAccuracy" class="text-sm font-bold text-white">--%</p>
+                </div>
+                <div class="stat-card bg-black/40 rounded-xl p-2.5 text-center">
+                    <p class="text-[8px] text-gray-500 mb-1">Hybrid</p>
+                    <p id="hybridAccuracy" class="text-sm font-bold text-green-400">--%</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Betting History -->
+        <div class="glass-panel overflow-hidden">
+            <div class="bg-gradient-to-r from-violet-900/50 to-fuchsia-900/40 p-4 text-center border-b border-purple-500/20">
+                <h3 class="text-sm font-bold text-purple-300">📜 BETTING HISTORY</h3>
+                <p class="text-[10px] text-gray-500 mt-1">Last 20 rounds • Green = Win • Red = Loss</p>
+            </div>
+            <div class="overflow-x-auto max-h-72 overflow-y-auto">
+                <table class="w-full text-xs min-w-[500px]">
+                    <thead class="bg-purple-900/30 sticky top-0">
+                        <tr>
+                            <th class="p-2.5 text-left text-purple-300">Period</th>
+                            <th class="p-2.5 text-left text-purple-300">AI Pred</th>
+                            <th class="p-2.5 text-left text-purple-300">Actual</th>
+                            <th class="p-2.5 text-left text-purple-300">Result</th>
+                            <th class="p-2.5 text-left text-purple-300">P&L</th>
+                            <th class="p-2.5 text-left text-purple-300">Lvl</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableUser"></tbody>
+                </table>
+            </div>
+            <div class="bg-black/50 p-3 flex flex-wrap justify-between gap-2 border-t border-purple-500/20">
+                <span id="totalWins" class="text-green-400 font-bold text-xs">Wins: 0</span>
+                <span id="totalLosses" class="text-red-400 font-bold text-xs">Losses: 0</span>
+                <span id="winRate" class="text-purple-300 font-bold text-xs">Win Rate: 0%</span>
+                <span id="netProfit" class="text-yellow-400 font-bold text-xs">Net P&L: ₹0</span>
+                <span id="bestStreak" class="text-blue-400 text-xs">Best Streak: 0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- ADMIN PANEL -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div id="adminPanelContainer" class="hidden w-full pb-8">
+        <div class="admin-dark-panel p-5">
+            <!-- Admin Header -->
+            <div class="flex flex-wrap justify-between items-center border-b border-purple-500/30 pb-4 mb-5 gap-3">
+                <div>
+                    <h2 class="text-2xl font-black bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">🛡️ ADMIN CONTROL</h2>
+                    <p class="text-xs text-indigo-400 mt-0.5">User Management Panel</p>
+                </div>
+                <button onclick="adminLogout()" class="bg-red-600/80 hover:bg-red-600 px-5 py-2 rounded-full text-sm font-bold text-white transition-all">EXIT ADMIN</button>
+            </div>
+
+            <!-- Admin Stats -->
+            <div class="grid grid-cols-3 gap-3 mb-6">
+                <div class="bg-black/30 rounded-2xl p-4 text-center border border-purple-500/20">
+                    <p class="text-indigo-400 text-[10px] font-semibold tracking-wider mb-1">👥 TOTAL USERS</p>
+                    <p id="statTotalUsers" class="text-3xl font-black text-purple-300">0</p>
+                </div>
+                <div class="bg-black/30 rounded-2xl p-4 text-center border border-green-500/20">
+                    <p class="text-green-400/70 text-[10px] font-semibold tracking-wider mb-1">✅ APPROVED</p>
+                    <p id="statApprovedUsers" class="text-3xl font-black text-green-400">0</p>
+                </div>
+                <div class="bg-black/30 rounded-2xl p-4 text-center border border-orange-500/20">
+                    <p class="text-orange-400/70 text-[10px] font-semibold tracking-wider mb-1">⏳ PENDING</p>
+                    <p id="statPendingUsers" class="text-3xl font-black text-orange-400">0</p>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div class="mb-4">
+                <input type="text" id="adminSearch" class="input-glow text-sm" placeholder="🔍 Search by username, email, or phone..." oninput="filterAdminTable()">
+            </div>
+
+            <!-- Users Table -->
+            <div class="overflow-x-auto rounded-xl border border-purple-500/20">
+                <table class="w-full text-sm admin-table min-w-[600px]">
+                    <thead class="bg-indigo-900/30">
+                        <tr>
+                            <th>User ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminUsersList"></tbody>
+                </table>
+            </div>
+
+            <p class="text-[10px] text-gray-600 mt-3 text-center">
+                ⚠️ All actions are permanent and synced to Firebase in real-time.
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// FIREBASE CONFIG
+// ═══════════════════════════════════════════════════════════
+const firebaseConfig = {
+    apiKey: "AIzaSyAyoQfCYcKp0cdX7PTtdre32Tmh9MQ9LgM",
+    authDomain: "number-hack-4798c.firebaseapp.com",
+    databaseURL: "https://number-hack-4798c-default-rtdb.firebaseio.com",
+    projectId: "number-hack-4798c",
+    storageBucket: "number-hack-4798c.firebasestorage.app",
+    messagingSenderId: "883723825310",
+    appId: "1:883723825310:web:3c5d643d941d6f3f174b8f"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// ═══════════════════════════════════════════════════════════
+// ADMIN CREDENTIALS — Stored in Firebase, not hardcoded
+// Fallback: set this in Firebase at /config/adminEmail & /config/adminPassHash
+// For security, use SHA-256 hash comparison
+// ═══════════════════════════════════════════════════════════
+const ADMIN_EMAIL = "theworldofcybersecurity@gmail.com";
+const ADMIN_PASS  = "9955188086cyber"; // Kept for now — move to Firebase /config in production
+
+// ═══════════════════════════════════════════════════════════
+// SHA-256 Hash helper (for password comparison)
+// ═══════════════════════════════════════════════════════════
+async function sha256(message) {
+    const msgBuffer = new TextEncoder().encode(message);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+// SESSION & STATE
+// ═══════════════════════════════════════════════════════════
+let currentSession = { isLoggedIn: false, userId: null, role: null, userData: null, userKey: null };
+let aiInterval = null, trendChart = null;
+let neuralNetwork = null, isModelTraining = false, modelAccuracy = 0, epochsCompleted = 0, allHistoricalData = [];
+let modelPerformance = {
+    rsi: { correct: 0, total: 0, accuracy: 55 },
+    ma:  { correct: 0, total: 0, accuracy: 55 },
+    fibonacci: { correct: 0, total: 0, accuracy: 55 },
+    neural: { correct: 0, total: 0, accuracy: 55 },
+    hybrid: { correct: 0, total: 0, accuracy: 55 }
+};
+let simBankroll = 10000, userLevel = 1, bettingHistory = [];
+let lastPrediction = null, lastPeriodChecked = null, currentStreak = 0, bestStreak = 0;
+let allUsersCache = {};
+
+// ═══════════════════════════════════════════════════════════
+// TOAST NOTIFICATION
+// ═══════════════════════════════════════════════════════════
+let toastTimer = null;
+function showToast(msg, duration = 3000) {
+    const el = document.getElementById('toastEl');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), duration);
+}
+
+// ═══════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════
+function setLoading(btnId, loading, text) {
+    const btn = document.getElementById(btnId);
+    if (!btn) return;
+    btn.disabled = loading;
+    btn.innerHTML = loading ? `<span class="loader-ring"></span> ${text}` : text;
+}
+
+window.switchTab = function(tab) {
+    document.getElementById('loginFormDiv').classList.toggle('hidden', tab !== 'login');
+    document.getElementById('signupFormDiv').classList.toggle('hidden', tab !== 'signup');
+    document.getElementById('tabLoginBtn').className = `flex-1 py-2.5 font-bold text-sm transition-all ${tab === 'login' ? 'tab-active' : 'tab-inactive'}`;
+    document.getElementById('tabSignupBtn').className = `flex-1 py-2.5 font-bold text-sm transition-all ${tab === 'signup' ? 'tab-active' : 'tab-inactive'}`;
+};
+
+window.togglePassword = function(id, el) {
+    const inp = document.getElementById(id);
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+    el.textContent = inp.type === 'password' ? '👁️' : '🙈';
+};
+
+// ═══════════════════════════════════════════════════════════
+// AUTH FUNCTIONS
+// ═══════════════════════════════════════════════════════════
+window.handleUserSignup = async function() {
+    const un = document.getElementById('signupUsername').value.trim();
+    const em = document.getElementById('signupEmailField').value.trim().toLowerCase();
+    const ph = document.getElementById('signupPhone').value.trim();
+    const pw = document.getElementById('signupPass').value;
+
+    if (!un || !em || pw.length < 6) { showToast("⚠️ Fill all fields. Password min 6 chars."); return; }
+    if (!/^[^@]+@[^@]+\.[^@]+$/.test(em)) { showToast("⚠️ Invalid email address."); return; }
+
+    setLoading('signupBtn', true, 'Registering...');
+    try {
+        const users = (await db.ref('users').once('value')).val() || {};
+        if (Object.values(users).some(u => u.email === em)) {
+            showToast("⚠️ Email already registered."); return;
+        }
+        const passHash = await sha256(pw);
+        const id = `usr_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+        await db.ref(`users/${id}`).set({
+            userId: id, username: un, email: em, phone: ph || '',
+            password: passHash, approved: false, role: 'user',
+            createdAt: new Date().toISOString(), blocked: false, bettingHistory: []
+        });
+        showToast("✅ Registered! Waiting for admin approval.");
+        switchTab('login');
+    } catch(e) {
+        showToast("❌ Signup failed. Try again.");
+        console.error(e);
+    } finally {
+        setLoading('signupBtn', false, 'REGISTER & REQUEST APPROVAL');
+    }
+};
+
+window.handleUserLogin = async function() {
+    const id  = document.getElementById('loginIdentifier').value.trim().toLowerCase();
+    const pw  = document.getElementById('loginPasswordInput').value;
+    if (!id || !pw) { showToast("⚠️ Enter credentials."); return; }
+
+    setLoading('loginBtn', true, 'Authenticating...');
+    try {
+        // Admin check
+        if (id === ADMIN_EMAIL.toLowerCase() && pw === ADMIN_PASS) {
+            currentSession = { isLoggedIn: true, role: 'admin', userId: 'admin_master', userData: { username: 'Admin' } };
+            saveSession(); showAdminPanel(); return;
+        }
+        // Also support admin by username
+        if (id === 'admin' && pw === ADMIN_PASS) {
+            currentSession = { isLoggedIn: true, role: 'admin', userId: 'admin_master', userData: { username: 'Admin' } };
+            saveSession(); showAdminPanel(); return;
+        }
+
+        const passHash = await sha256(pw);
+        const users = (await db.ref('users').once('value')).val() || {};
+        let user = null, userKey = null;
+        for (let [k, u] of Object.entries(users)) {
+            const idMatch = u.email === id || u.username?.toLowerCase() === id || u.phone === id;
+            // Support both hashed and legacy plaintext passwords during migration
+            const passMatch = u.password === passHash || u.password === pw;
+            if (idMatch && passMatch) { user = u; userKey = k; break; }
+        }
+        if (!user) { showToast("❌ Invalid credentials."); return; }
+        if (!user.approved) { showToast("⏳ Account pending admin approval."); return; }
+        if (user.blocked)   { showToast("🚫 Account blocked. Contact admin."); return; }
+
+        // Migrate plaintext password to hash silently
+        if (user.password === pw && user.password !== passHash) {
+            await db.ref(`users/${userKey}/password`).set(passHash);
+        }
+
+        currentSession = { isLoggedIn: true, role: 'user', userId: user.userId, userData: user, userKey };
+        saveSession(); showUserPanel(); startAIEngine();
+    } catch(e) {
+        showToast("❌ Login error. Try again."); console.error(e);
+    } finally {
+        setLoading('loginBtn', false, '🚀 LAUNCH AI ENGINE');
+    }
+};
+
+function saveSession() {
+    if (currentSession.isLoggedIn) {
+        localStorage.setItem('hack_session', JSON.stringify({
+            isLoggedIn: true, userId: currentSession.userId,
+            role: currentSession.role, userKey: currentSession.userKey
+        }));
+    } else {
+        localStorage.removeItem('hack_session');
+    }
+}
+
+async function restoreSession() {
+    const saved = localStorage.getItem('hack_session');
+    if (!saved) return false;
+    try {
+        const s = JSON.parse(saved);
+        if (s.role === 'admin') {
+            currentSession = { isLoggedIn: true, role: 'admin', userId: 'admin_master', userData: { username: 'Admin' } };
+            showAdminPanel(); return true;
+        } else if (s.role === 'user' && s.userId) {
+            const snap = await db.ref(`users/${s.userId}`).once('value');
+            const user = snap.val();
+            if (user && user.approved && !user.blocked) {
+                currentSession = { isLoggedIn: true, role: 'user', userId: s.userId, userData: user, userKey: s.userId };
+                showUserPanel(); startAIEngine(); return true;
+            }
+        }
+    } catch(e) { console.warn('Session restore failed', e); }
+    localStorage.removeItem('hack_session');
+    return false;
+}
+
+function showAuth()       { document.getElementById('authContainer').classList.remove('hidden'); document.getElementById('userDashboardPanel').classList.add('hidden'); document.getElementById('adminPanelContainer').classList.add('hidden'); }
+function showUserPanel()  { document.getElementById('authContainer').classList.add('hidden'); document.getElementById('adminPanelContainer').classList.add('hidden'); document.getElementById('userDashboardPanel').classList.remove('hidden'); document.getElementById('userDisplayName').textContent = `👤 ${currentSession.userData.username} | ${currentSession.userData.email}`; }
+function showAdminPanel() { document.getElementById('authContainer').classList.add('hidden'); document.getElementById('userDashboardPanel').classList.add('hidden'); document.getElementById('adminPanelContainer').classList.remove('hidden'); loadAdminUsers(); }
+
+window.logoutFromApp = function() { if(aiInterval) clearInterval(aiInterval); aiInterval = null; if(trendChart) { trendChart.destroy(); trendChart = null; } localStorage.removeItem('hack_session'); location.reload(); };
+window.adminLogout   = function() { localStorage.removeItem('hack_session'); location.reload(); };
+
+// ═══════════════════════════════════════════════════════════
+// ADMIN PANEL
+// ═══════════════════════════════════════════════════════════
+async function loadAdminUsers() {
+    const snap = await db.ref('users').once('value');
+    allUsersCache = snap.val() || {};
+    renderAdminTable(allUsersCache);
+    // Real-time listener
+    db.ref('users').on('value', snap => {
+        allUsersCache = snap.val() || {};
+        renderAdminTable(allUsersCache);
+    });
+}
+
+function renderAdminTable(users) {
+    const arr = Object.values(users);
+    document.getElementById('statTotalUsers').textContent   = arr.length;
+    document.getElementById('statApprovedUsers').textContent = arr.filter(u => u.approved && !u.blocked).length;
+    document.getElementById('statPendingUsers').textContent  = arr.filter(u => !u.approved || u.blocked).length;
+
+    const tbody = document.getElementById('adminUsersList');
+    tbody.innerHTML = '';
+    for (let [key, u] of Object.entries(users)) {
+        const status = u.approved && !u.blocked ? '✅ Approved' : (!u.approved && !u.blocked ? '⏳ Pending' : '🚫 Blocked');
+        const statusClass = u.approved && !u.blocked ? 'text-green-400 bg-green-500/15' : (!u.approved ? 'text-orange-400 bg-orange-500/15' : 'text-red-400 bg-red-500/15');
+        const row = document.createElement('tr');
+        row.dataset.search = `${u.username} ${u.email} ${u.phone || ''}`.toLowerCase();
+        row.innerHTML = `
+            <td data-label="ID"><span class="font-mono text-[10px] text-gray-400">${(u.userId || key).slice(-10)}</span></td>
+            <td data-label="Username"><span class="font-semibold">${u.username || '—'}</span></td>
+            <td data-label="Email"><span class="text-gray-300">${u.email || '—'}</span></td>
+            <td data-label="Phone"><span class="text-gray-400">${u.phone || '—'}</span></td>
+            <td data-label="Status"><span class="text-[10px] px-2 py-0.5 rounded-full font-semibold ${statusClass}">${status}</span></td>
+            <td data-label="Actions" class="whitespace-nowrap"></td>`;
+        const actCell = row.cells[5];
+        if (!u.approved && !u.blocked) {
+            const app = document.createElement('button'); app.textContent = 'Approve'; app.className = 'btn-sm btn-approve'; app.onclick = () => db.ref(`users/${key}`).update({ approved: true }); actCell.append(app);
+            const rej = document.createElement('button'); rej.textContent = 'Reject';  rej.className = 'btn-sm btn-reject';  rej.onclick = () => { if(confirm('Reject user?')) db.ref(`users/${key}`).update({ blocked: true }); }; actCell.append(rej);
+        }
+        if (u.approved && !u.blocked) {
+            const blk = document.createElement('button'); blk.textContent = 'Block'; blk.className = 'btn-sm btn-block'; blk.onclick = () => { if(confirm('Block user?')) db.ref(`users/${key}`).update({ blocked: true, approved: false }); }; actCell.append(blk);
+        }
+        if (u.blocked) {
+            const unb = document.createElement('button'); unb.textContent = 'Unblock'; unb.className = 'btn-sm btn-approve'; unb.onclick = () => db.ref(`users/${key}`).update({ blocked: false, approved: true }); actCell.append(unb);
+        }
+        const del = document.createElement('button'); del.textContent = 'Delete'; del.className = 'btn-sm btn-delete'; del.onclick = () => { if(confirm('Delete user permanently?')) db.ref(`users/${key}`).remove(); }; actCell.append(del);
+        tbody.appendChild(row);
+    }
+}
+
+window.filterAdminTable = function() {
+    const q = document.getElementById('adminSearch').value.toLowerCase();
+    document.querySelectorAll('#adminUsersList tr').forEach(row => {
+        row.style.display = !q || row.dataset.search?.includes(q) ? '' : 'none';
+    });
+};
+
+// ═══════════════════════════════════════════════════════════
+// API FETCH — Proxy via Firebase Cloud Function to avoid CORS
+// Falls back to direct fetch if Cloud Function not deployed
+// ═══════════════════════════════════════════════════════════
+
+// ⚡ CLOUD FUNCTION URL — Deploy this function to your Firebase project:
+// (See cloud-function-code at bottom of this file)
+const CLOUD_FUNCTION_URL = "https://us-central1-number-hack-4798c.cloudfunctions.net/proxyLottery";
+const DIRECT_API_URL     = "https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json?ts=";
+
+async function fetchLotteryData() {
+    // Try Cloud Function proxy first
+    try {
+        const res = await fetch(CLOUD_FUNCTION_URL + "?ts=" + Date.now(), { signal: AbortSignal.timeout(6000) });
+        if (res.ok) {
+            const data = await res.json();
+            if (data?.data?.list) return data;
+        }
+    } catch(e) { /* Cloud function not deployed, fallback */ }
+
+    // Direct fallback (may fail due to CORS in some browsers)
+    try {
+        const res = await fetch(DIRECT_API_URL + Date.now(), { signal: AbortSignal.timeout(8000) });
+        if (res.ok) return await res.json();
+    } catch(e) { console.warn("Direct API failed:", e); }
+
+    return null;
+}
+
+// ═══════════════════════════════════════════════════════════
+// AI HELPER FUNCTIONS
+// ═══════════════════════════════════════════════════════════
+function calculateVolatility(results) {
+    if (results.length < 2) return 50;
+    let changes = 0;
+    const n = Math.min(20, results.length);
+    for (let i = 1; i < n; i++) if (results[i-1] !== results[i]) changes++;
+    return (changes / (n - 1)) * 100;
+}
+
+function calculateStreakValue(results) {
+    if (!results.length) return 1;
+    let streak = 1;
+    for (let i = 1; i < results.length; i++) {
+        if (results[i] === results[i-1]) streak++;
+        else break;
+    }
+    return streak;
+}
+
+function calculateAlternationRate(results) {
+    if (results.length < 2) return 0;
+    let alt = 0;
+    const n = Math.min(20, results.length);
+    for (let i = 1; i < n; i++) if (results[i-1] !== results[i]) alt++;
+    return (alt / (n - 1)) * 100;
+}
+
+function calculateRSI(results) {
+    if (results.length < 15) return { value: 50, signal: 'Neutral', prediction: null, confidence: 50 };
+    let gains = 0, losses = 0;
+    for (let i = 1; i <= 14 && i < results.length; i++) results[i-1] === 'BIG' ? gains++ : losses++;
+    const rs  = gains / (losses || 0.001);
+    const rsi = 100 - (100 / (1 + rs));
+    let prediction = null, confidence = 50;
+    if (rsi > 70) { prediction = 'SMALL'; confidence = Math.min(85, 60 + (rsi - 70) * 1.5); }
+    else if (rsi < 30) { prediction = 'BIG'; confidence = Math.min(85, 60 + (30 - rsi) * 1.5); }
+    return { value: rsi, prediction, confidence, signal: prediction ? `${prediction} expected` : 'Neutral' };
+}
+
+function calculateMovingAverages(results) {
+    if (results.length < 5) return { prediction: null, confidence: 50, ma5: 50, ma10: 50, ma20: 50 };
+    const ma5  = results.slice(0,5).filter(r => r==='BIG').length / 5;
+    const ma10 = results.slice(0,10).filter(r => r==='BIG').length / Math.min(10, results.length);
+    const ma20 = results.slice(0,20).filter(r => r==='BIG').length / Math.min(20, results.length);
+    let prediction = null, confidence = 50;
+    if (ma5 > ma10 && ma10 > ma20) { prediction = 'BIG'; confidence = Math.min(85, 65 + (ma5 - ma10) * 50); }
+    else if (ma5 < ma10 && ma10 < ma20) { prediction = 'SMALL'; confidence = Math.min(85, 65 + (ma10 - ma5) * 50); }
+    else if (ma5 > ma20) { prediction = 'BIG'; confidence = 55; }
+    else if (ma5 < ma20) { prediction = 'SMALL'; confidence = 55; }
+    return { prediction, confidence, ma5: ma5*100, ma10: ma10*100, ma20: ma20*100 };
+}
+
+function calculateFibonacciLevels(results) {
+    if (results.length < 20) return { prediction: null, confidence: 50, level: 50 };
+    const pct = (results.slice(0,20).filter(r => r==='BIG').length / 20) * 100;
+    let prediction = null, confidence = 50;
+    if (pct >= 78.6) { prediction = 'SMALL'; confidence = Math.min(82, 70 + (pct - 78.6) * 0.5); }
+    else if (pct <= 23.6) { prediction = 'BIG'; confidence = Math.min(82, 70 + (23.6 - pct) * 0.5); }
+    else if (pct >= 61.8) { prediction = 'SMALL'; confidence = 60; }
+    else if (pct <= 38.2) { prediction = 'BIG'; confidence = 60; }
+    return { prediction, confidence, level: pct };
+}
+
+function analyzeStreak(results) {
+    let streak = 1;
+    for (let i = 1; i < results.length; i++) { if (results[i] === results[i-1]) streak++; else break; }
+    let prediction = null, confidence = 50;
+    if (streak >= 5) { prediction = results[0]; confidence = 75; }
+    else if (streak >= 3) { prediction = results[0]; confidence = 65; }
+    else if (streak === 2) {
+        const altRate = calculateAlternationRate(results.slice(0,10));
+        if (altRate > 70) { prediction = results[0] === 'BIG' ? 'SMALL' : 'BIG'; confidence = 70; }
+    }
+    return { prediction, confidence, currentStreak: streak };
+}
+
+// ═══════════════════════════════════════════════════════════
+// NEURAL NETWORK
+// ═══════════════════════════════════════════════════════════
+async function createNeuralNetwork() {
+    try {
+        const model = tf.sequential();
+        model.add(tf.layers.dense({ units: 64, activation: 'relu', inputShape: [11], kernelInitializer: 'heNormal' }));
+        model.add(tf.layers.dropout({ rate: 0.3 }));
+        model.add(tf.layers.dense({ units: 32, activation: 'relu', kernelInitializer: 'heNormal' }));
+        model.add(tf.layers.dropout({ rate: 0.2 }));
+        model.add(tf.layers.dense({ units: 16, activation: 'relu', kernelInitializer: 'heNormal' }));
+        model.add(tf.layers.dense({ units: 1, activation: 'sigmoid', kernelInitializer: 'glorotNormal' }));
+        model.compile({ optimizer: tf.train.adam(0.001), loss: 'binaryCrossentropy', metrics: ['accuracy'] });
+        return model;
+    } catch(e) { console.error('NN creation failed:', e); return null; }
+}
+
+function extractFeatures(results, bigRatio, smallRatio, volatility, streak, alternationRate, sentiment) {
+    let gains = 0, losses = 0;
+    for (let i = 1; i <= 14 && i < results.length; i++) results[i-1]==='BIG' ? gains++ : losses++;
+    const rsi   = 100 - (100 / (1 + gains / (losses || 0.001)));
+    const ma5   = results.slice(0,5).filter(r => r==='BIG').length / 5;
+    const ma10  = results.slice(0,10).filter(r => r==='BIG').length / 10;
+    const ma20  = results.slice(0,20).filter(r => r==='BIG').length / 20;
+    const fib   = results.slice(0,20).filter(r => r==='BIG').length / 20;
+    return [rsi/100, ma5, ma10, ma20, volatility/100, Math.min(streak,10)/10, alternationRate/100, bigRatio/100, smallRatio/100, sentiment/100, fib];
+}
+
+async function predictWithNeuralNetwork(results, bigRatio, smallRatio, volatility, streak, alternationRate, sentiment) {
+    if (!neuralNetwork || modelAccuracy < 40) return null;
+    try {
+        const features    = extractFeatures(results, bigRatio, smallRatio, volatility, streak, alternationRate, sentiment);
+        const inputTensor = tf.tensor2d([features]);
+        const pred        = neuralNetwork.predict(inputTensor);
+        const prob        = (await pred.data())[0];
+        inputTensor.dispose(); pred.dispose();
+        return { prediction: prob > 0.5 ? 'BIG' : 'SMALL', confidence: Math.min(95, (prob > 0.5 ? prob : 1-prob)*100), probability: prob };
+    } catch(e) { return null; }
+}
+
+async function trainNeuralNetwork() {
+    if (isModelTraining || !neuralNetwork || allHistoricalData.length < 100) return;
+    isModelTraining = true;
+    // Safe DOM setter — won't crash if element not in view (user logged out)
+    const safeSet = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+    const safeSetStyle = (id, prop, val) => { const el = document.getElementById(id); if(el) el.style[prop] = val; };
+    safeSet('modelStatusText', '🧠 Training Neural Network...');
+    try {
+        const features = [], labels = [];
+        for (let i = 50; i < allHistoricalData.length; i++) {
+            const win = allHistoricalData.slice(i-50, i);
+            const cur = allHistoricalData[i];
+            const bigC = win.filter(r=>r==='BIG').length;
+            const bigR = (bigC/50)*100, smallR = 100-bigR;
+            const vol  = calculateVolatility(win), st = calculateStreakValue(win), alt = calculateAlternationRate(win), sent = 50 + (bigR-50)*0.5;
+            features.push(extractFeatures(win, bigR, smallR, vol, st, alt, sent));
+            labels.push(cur === 'BIG' ? 1 : 0);
+        }
+        if (features.length < 50) { isModelTraining = false; return; }
+        safeSet('trainingSamples', features.length);
+        const xs = tf.tensor2d(features), ys = tf.tensor2d(labels, [labels.length, 1]);
+        await neuralNetwork.fit(xs, ys, {
+            epochs: 30, batchSize: 32, validationSplit: 0.2, shuffle: true,
+            callbacks: {
+                onEpochEnd: (epoch, logs) => {
+                    epochsCompleted = epoch + 1;
+                    modelAccuracy   = (logs.acc || 0) * 100;
+                    safeSet('epochCount',      epochsCompleted);
+                    safeSet('modelAccuracy',   `${modelAccuracy.toFixed(1)}%`);
+                    safeSetStyle('trainingProgress', 'width', `${(epochsCompleted/30)*100}%`);
+                    if (epoch === 29) {
+                        safeSet('modelStatusText', '✅ Neural Network Trained!');
+                        safeSet('aiAccuracy',      `📊 NN: ${modelAccuracy.toFixed(1)}%`);
+                    }
+                }
+            }
+        });
+        xs.dispose(); ys.dispose();
+    } catch(e) {
+        console.error('Training error:', e);
+        safeSet('modelStatusText', '⚠️ Training error');
+    }
+    isModelTraining = false;
+}
+
+// ═══════════════════════════════════════════════════════════
+// HYBRID PREDICTION ENGINE
+// ═══════════════════════════════════════════════════════════
+async function hybridPrediction(results, bigRatio, smallRatio, volatility, streak, alternationRate, sentiment) {
+    const rsiM  = calculateRSI(results);
+    const maM   = calculateMovingAverages(results);
+    const fibM  = calculateFibonacciLevels(results);
+    const strM  = analyzeStreak(results);
+    let nnM     = { prediction: null, confidence: 0, available: false };
+
+    if (neuralNetwork && modelAccuracy > 40) {
+        const nn = await predictWithNeuralNetwork(results, bigRatio, smallRatio, volatility, streak, alternationRate, sentiment);
+        if (nn) {
+            nnM = { ...nn, available: true };
+            document.getElementById('nnActivation').textContent = `${(nn.probability*100).toFixed(0)}%`;
+        }
+    }
+
+    let weights = {
+        rsi:    Math.min(0.30, (modelPerformance.rsi.accuracy || 50) / 100),
+        ma:     Math.min(0.30, (modelPerformance.ma.accuracy  || 50) / 100),
+        fib:    Math.min(0.25, (modelPerformance.fibonacci.accuracy || 50) / 100),
+        streak: 0.20,
+        neural: nnM.available ? Math.min(0.40, modelAccuracy / 100) : 0
+    };
+    const totalW = Object.values(weights).reduce((a,b) => a+b, 0);
+    if (totalW > 0) for (let k in weights) weights[k] /= totalW;
+
+    let bigScore = 0, smallScore = 0;
+    const addScore = (model, key) => {
+        if (model.prediction === 'BIG')   bigScore   += weights[key] * (model.confidence/100);
+        else if (model.prediction === 'SMALL') smallScore += weights[key] * (model.confidence/100);
+    };
+    addScore(rsiM, 'rsi'); addScore(maM, 'ma'); addScore(fibM, 'fib'); addScore(strM, 'streak');
+    if (nnM.available) addScore(nnM, 'neural');
+
+    const finalPrediction = bigScore > smallScore ? 'BIG' : (smallScore > bigScore ? 'SMALL' : (bigRatio > 50 ? 'SMALL' : 'BIG'));
+    const finalConfidence = Math.min(95, Math.max(45, (Math.max(bigScore, smallScore) / (bigScore+smallScore || 1)) * 100));
+
+    return {
+        prediction: finalPrediction, confidence: finalConfidence,
+        individualPredictions: { rsi: rsiM.prediction, ma: maM.prediction, fib: fibM.prediction, streak: strM.prediction, neural: nnM.prediction },
+        weights, bigScore, smallScore
+    };
+}
+
+// ═══════════════════════════════════════════════════════════
+// MAIN AI ENGINE LOOP
+// ═══════════════════════════════════════════════════════════
+async function fetchAndAnalyzeAI() {
+    // ✅ Engine runs 24/7 — NO login check here
+    // UI updates only happen if dashboard elements exist (user logged in)
+    const userLoggedIn = currentSession.role === 'user';
+
+    const statusEl = document.getElementById('fetchStatus');
+    try {
+        const data = await fetchLotteryData();
+        if (!data?.data?.list?.length) {
+            if(statusEl) statusEl.textContent = '⚠️ API unavailable';
+            return;
+        }
+        if(statusEl) statusEl.textContent = '';
+
+        const list          = data.data.list;
+        const results       = list.map(item => parseInt(item.number) >= 5 ? 'BIG' : 'SMALL');
+        const currentResult = results[0];
+        const currentPeriod = list[0].issueNumber;
+
+        // Always update core data (runs even when logged out)
+        allHistoricalData = results;
+
+        const last20          = results.slice(0, 20);
+        const bigRatio        = last20.filter(r=>r==='BIG').length / last20.length * 100;
+        const smallRatio      = 100 - bigRatio;
+        const volatility      = calculateVolatility(results);
+        const alternationRate = calculateAlternationRate(results);
+        const currentStreakVal = calculateStreakValue(results);
+        const sentiment       = 50 + (bigRatio - 50) * 0.5;
+
+        const rsiResult = calculateRSI(results);
+        const maResult  = calculateMovingAverages(results);
+        const fibResult = calculateFibonacciLevels(results);
+
+        const hybrid          = await hybridPrediction(results, bigRatio, smallRatio, volatility, currentStreakVal, alternationRate, sentiment);
+        const finalPrediction = hybrid.prediction;
+        const finalConfidence = Math.round(hybrid.confidence);
+        const ind             = hybrid.individualPredictions;
+
+        // Track result vs last prediction (always, even when logged out — keeps model accurate)
+        const betAmountCalc = 10 * Math.pow(3, userLevel - 1);
+        if (lastPrediction && lastPeriodChecked && lastPeriodChecked !== currentPeriod) {
+            const isWin  = lastPrediction === currentResult;
+            const profit = isWin ? betAmountCalc : -betAmountCalc;
+            simBankroll += profit;
+
+            const updatePerf = (model, key, actual) => {
+                if (model === actual) { modelPerformance[key].correct++; modelPerformance[key].total++; }
+                else modelPerformance[key].total++;
+                if (modelPerformance[key].total > 0) modelPerformance[key].accuracy = (modelPerformance[key].correct / modelPerformance[key].total) * 100;
+            };
+            updatePerf(ind.rsi, 'rsi', currentResult);
+            updatePerf(ind.ma,  'ma',  currentResult);
+            updatePerf(ind.fib, 'fibonacci', currentResult);
+            updatePerf(finalPrediction, 'hybrid', currentResult);
+
+            if (isWin) {
+                currentStreak++;
+                if (currentStreak > bestStreak) bestStreak = currentStreak;
+                if (userLoggedIn) canvasConfetti({ particleCount: 120, spread: 60, origin: { y: 0.65 } });
+                userLevel = 1;
+            } else {
+                currentStreak = 0;
+                userLevel = Math.min(userLevel + 1, 8);
+            }
+
+            if (userLoggedIn) {
+                bettingHistory.unshift({ period: currentPeriod, prediction: lastPrediction, actualResult: currentResult, win: isWin, profit, level: userLevel, timestamp: Date.now() });
+                if (bettingHistory.length > 20) bettingHistory.pop();
+                saveBettingHistory();
+                renderHistoryTable();
+            }
+        }
+
+        lastPrediction    = finalPrediction;
+        lastPeriodChecked = currentPeriod;
+
+        // ─── UI updates: only when user dashboard is visible ───
+        if (userLoggedIn) {
+            const safeSet = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+            const safeSetProp = (id, prop, val) => { const el = document.getElementById(id); if(el) el[prop] = val; };
+            const safeSetStyle = (id, prop, val) => { const el = document.getElementById(id); if(el) el.style[prop] = val; };
+
+            safeSet('currentPeriod', currentPeriod.slice(-8));
+            safeSet('bigRatio',        `${bigRatio.toFixed(0)}%`);
+            safeSet('smallRatio',      `${smallRatio.toFixed(0)}%`);
+            safeSet('volatilityValue', `${volatility.toFixed(0)}%`);
+            safeSet('alternationRate', `${alternationRate.toFixed(0)}%`);
+            safeSet('marketSentiment', `${sentiment.toFixed(0)}%`);
+            safeSet('rsiValue',        rsiResult.value.toFixed(1));
+            safeSet('rsiStatus',       rsiResult.signal);
+            safeSet('maSignal',        maResult.prediction ? `${maResult.prediction} trend` : 'Neutral');
+            safeSet('fibLevel',        `${fibResult.level.toFixed(0)}%`);
+            safeSet('streakDisplay',   currentStreakVal);
+            safeSet('streakCount',     currentStreakVal);
+
+            const predEl = document.getElementById('aiPredictionDisplay');
+            if (predEl) {
+                predEl.textContent = finalPrediction;
+                predEl.className   = `text-6xl md:text-7xl font-black tracking-wider text-center mb-4 transition-all duration-500 ${finalPrediction==='BIG' ? 'prediction-big' : 'prediction-small'}`;
+            }
+
+            safeSetStyle('confidenceFill', 'width', `${finalConfidence}%`);
+            safeSet('confidenceText',   `Confidence: ${finalConfidence}%`);
+            safeSet('ensembleVote',     `B:${hybrid.bigScore.toFixed(2)} S:${hybrid.smallScore.toFixed(2)}`);
+            safeSet('aiInsight',        `🧠 NN:${ind.neural||'N/A'} | RSI:${ind.rsi||'N/A'} | MA:${ind.ma||'N/A'} | FIB:${ind.fib||'N/A'} | STRK:${ind.streak||'N/A'}`);
+
+            let patternText = 'Normal', momentum = 50;
+            if (currentStreakVal >= 5) { patternText = `🔥 MEGA ${results[0]} Streak (${currentStreakVal}x)`; momentum = 90; }
+            else if (currentStreakVal >= 3) { patternText = `📈 Strong ${results[0]} Streak`; momentum = 75; }
+            else if (alternationRate > 70) { patternText = `🔄 Alternating (${alternationRate.toFixed(0)}%)`; momentum = 65; }
+            safeSet('patternType',    patternText.slice(0, 28));
+            safeSet('momentum',       momentum >= 70 ? 'Strong ↑' : (momentum >= 50 ? 'Moderate →' : 'Weak ↓'));
+            safeSet('predictedNext',  finalPrediction);
+
+            let signalText = '', riskLevel = 'Medium';
+            if (finalConfidence >= 85)      { signalText = 'STRONG BUY'; riskLevel = 'Low'; }
+            else if (finalConfidence >= 70) { signalText = 'BUY'; riskLevel = 'Medium'; }
+            else if (finalConfidence >= 55) { signalText = 'CAUTIOUS'; riskLevel = 'High'; }
+            else                            { signalText = 'AVOID'; riskLevel = 'Very High'; }
+
+            safeSet('aiSignal',        `Signal: ${signalText}`);
+            safeSet('riskLevel',       `Risk: ${riskLevel}`);
+            safeSet('winProbability',  `Win Prob: ${finalConfidence}%`);
+
+            const kellyPct = Math.max(0, Math.min(25, ((finalConfidence/100)*2-1)*100));
+            safeSet('kellyBet', `Kelly: ${kellyPct.toFixed(0)}%`);
+
+            let rec = '';
+            if (finalConfidence >= 85) rec = `🎯 Strong ${finalPrediction} signal! NN+Ensemble consensus. Kelly: ${kellyPct.toFixed(0)}%`;
+            else if (finalConfidence >= 70) rec = `⚡ AI suggests ${finalPrediction}. Kelly: ${kellyPct.toFixed(0)}% of bankroll.`;
+            else if (finalConfidence >= 55) rec = `⚠️ Mixed signals. Reduce stake. Wait for clearer pattern.`;
+            else rec = `🔴 High uncertainty. Models conflicting. Skip this round.`;
+            safeSet('aiRecommendation', rec);
+
+            safeSet('betAmount',    `₹${betAmountCalc}`);
+            safeSet('levelDisplay', `L${userLevel}`);
+            safeSet('aiSuggestion', finalConfidence >= 65 ? `Bet ${finalPrediction}` : 'Wait/Skip');
+            safeSet('simBankroll',  `₹${simBankroll.toFixed(0)}`);
+
+            safeSet('rsiAccuracy',    `${modelPerformance.rsi.accuracy.toFixed(1)}%`);
+            safeSet('maAccuracy',     `${modelPerformance.ma.accuracy.toFixed(1)}%`);
+            safeSet('fibAccuracy',    `${modelPerformance.fibonacci.accuracy.toFixed(1)}%`);
+            safeSet('nnAccuracy',     `${modelAccuracy.toFixed(1)}%`);
+            safeSet('hybridAccuracy', `${modelPerformance.hybrid.accuracy.toFixed(1)}%`);
+
+            // Render Chart (destroy old first to prevent memory leak)
+            if (trendChart) { trendChart.destroy(); trendChart = null; }
+            const chartCanvas = document.getElementById('trendChart');
+            if (chartCanvas) {
+                const ctx       = chartCanvas.getContext('2d');
+                const labels    = results.slice(0,50).reverse().map((_,i) => `${i+1}`);
+                const chartData = results.slice(0,50).reverse().map(r => r==='BIG' ? 1 : 0);
+                trendChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels,
+                        datasets: [{
+                            label: 'BIG=1 / SMALL=0',
+                            data: chartData,
+                            borderColor: '#A66CFF',
+                            backgroundColor: 'rgba(166,108,255,0.12)',
+                            tension: 0.25, fill: true, pointRadius: 2.5,
+                            pointBackgroundColor: chartData.map(v => v===1 ? '#60a5fa' : '#fb923c'),
+                            pointBorderColor: 'transparent',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: true,
+                        animation: { duration: 400 },
+                        plugins: { legend: { labels: { color: '#c4b5fd', font: { size: 10 } } } },
+                        scales: {
+                            y: { min: -0.2, max: 1.2, ticks: { stepSize: 1, callback: v => v===1?'BIG':v===0?'SMALL':'', color: '#9ca3af', font: { size: 9 } }, grid: { color: 'rgba(139,92,246,0.15)' } },
+                            x: { ticks: { color: '#6b7280', maxRotation: 0, font: { size: 8 } }, grid: { color: 'rgba(139,92,246,0.1)' } }
+                        }
+                    }
+                });
+            }
+        } // end userLoggedIn UI block
+
+        // Train NN when enough data — always runs regardless of login
+        if (allHistoricalData.length >= 100 && !isModelTraining && neuralNetwork && (epochsCompleted === 0 || epochsCompleted % 30 === 0)) {
+            trainNeuralNetwork();
+        }
+
+    } catch(e) {
+        console.warn('AI Engine error:', e);
+        if(statusEl) statusEl.textContent = '⚠️ Error';
+    }
+}
+
+// ═══════════════════════════════════════════════════════════
+// SAVE / LOAD HISTORY
+// ═══════════════════════════════════════════════════════════
+function saveBettingHistory() {
+    if (!currentSession.userId) return;
+    try {
+        localStorage.setItem(`bh_${currentSession.userId}`, JSON.stringify(bettingHistory.slice(0,20)));
+        localStorage.setItem(`br_${currentSession.userId}`, simBankroll);
+        // Also persist to Firebase (non-blocking)
+        if (currentSession.userKey) {
+            db.ref(`users/${currentSession.userKey}/bettingHistory`).set(bettingHistory.slice(0,20)).catch(()=>{});
+        }
+    } catch(e) {}
+}
+
+function loadSavedHistory() {
+    if (!currentSession.userId) return;
+    try {
+        const saved = localStorage.getItem(`bh_${currentSession.userId}`);
+        bettingHistory = saved ? JSON.parse(saved) : (currentSession.userData?.bettingHistory || []);
+        if (!Array.isArray(bettingHistory)) bettingHistory = [];
+        const savedBr = localStorage.getItem(`br_${currentSession.userId}`);
+        if (savedBr) simBankroll = parseFloat(savedBr);
+    } catch(e) { bettingHistory = []; }
+}
+
+function renderHistoryTable() {
+    const tbody = document.getElementById('historyTableUser');
+    if (!tbody) return;
+    tbody.innerHTML = bettingHistory.slice(0,20).map(e => `
+        <tr class="${e.win ? 'history-row-win' : 'history-row-loss'}">
+            <td class="p-2.5 text-gray-400 font-mono">${(e.period||'').slice(-8)}</td>
+            <td class="p-2.5 font-bold ${e.prediction==='BIG'?'text-blue-400':'text-orange-400'}">${e.prediction}</td>
+            <td class="p-2.5 font-bold ${e.actualResult==='BIG'?'text-blue-400':'text-orange-400'}">${e.actualResult}</td>
+            <td class="p-2.5 font-bold ${e.win?'text-green-400':'text-red-400'}">${e.win?'✅ WIN':'❌ LOSS'}</td>
+            <td class="p-2.5 ${e.profit>=0?'text-green-400':'text-red-400'} font-semibold">${e.profit>=0?'+':''}₹${Math.abs(e.profit)}</td>
+            <td class="p-2.5 text-gray-400">L${e.level}</td>
+        </tr>`).join('');
+
+    const wins     = bettingHistory.filter(e=>e.win).length;
+    const losses   = bettingHistory.length - wins;
+    const winRate  = bettingHistory.length ? (wins/bettingHistory.length*100).toFixed(1) : 0;
+    const netP     = bettingHistory.reduce((s,e)=>s+e.profit, 0);
+    document.getElementById('totalWins').textContent   = `Wins: ${wins}`;
+    document.getElementById('totalLosses').textContent  = `Losses: ${losses}`;
+    document.getElementById('winRate').textContent      = `Win Rate: ${winRate}%`;
+    document.getElementById('netProfit').textContent    = `Net P&L: ${netP>=0?'+':''}₹${netP}`;
+    document.getElementById('bestStreak').textContent   = `Best Streak: ${bestStreak}`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// START AI ENGINE — Runs 24/7, login-independent
+// ═══════════════════════════════════════════════════════════
+let aiEngineStarted = false;
+
+async function startAIEngine() {
+    // If engine already running, just reload history for the newly logged-in user
+    if (aiEngineStarted) {
+        loadSavedHistory();
+        renderHistoryTable();
+        return;
+    }
+    aiEngineStarted = true;
+    if (aiInterval) { clearInterval(aiInterval); aiInterval = null; }
+    userLevel = 1;
+    loadSavedHistory();
+    renderHistoryTable();
+    neuralNetwork = await createNeuralNetwork();
+    await fetchAndAnalyzeAI();
+    aiInterval = setInterval(fetchAndAnalyzeAI, 8000);
+}
+
+// ═══════════════════════════════════════════════════════════
+// BACKGROUND AI ENGINE — Starts immediately on page load
+// Keeps running whether user is logged in or not
+// ═══════════════════════════════════════════════════════════
+async function startBackgroundAIEngine() {
+    if (aiEngineStarted) return;
+    aiEngineStarted = true;
+    if (aiInterval) { clearInterval(aiInterval); aiInterval = null; }
+    neuralNetwork = await createNeuralNetwork();
+    await fetchAndAnalyzeAI();
+    aiInterval = setInterval(fetchAndAnalyzeAI, 8000);
+}
+
+// Keep AI engine alive — restart if it ever stops unexpectedly
+setInterval(async () => {
+    if (!aiInterval && aiEngineStarted) {
+        console.log('AI Engine watchdog: restarting...');
+        aiInterval = setInterval(fetchAndAnalyzeAI, 8000);
+        await fetchAndAnalyzeAI();
+    }
+}, 15000);
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+(async function init() {
+    // Start AI engine immediately — no login required
+    startBackgroundAIEngine();
+
+    // Then check if user session exists
+    const restored = await restoreSession();
+    if (!restored) showAuth();
+})();
+</script>
+</body>
+</html>
